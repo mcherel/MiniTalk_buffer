@@ -12,7 +12,7 @@
 
 //MESSAGES
  # define MSG_WELCOME "Welcome, PID: "
- # define MSG_DELIVRD "Your message was delivered !!!!"
+ # define MSG_DELIVRD "Your message was delivered !!!!\n"
 
 //CONSTANTES
 # define SLEEP_TIME	200000

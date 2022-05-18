@@ -20,12 +20,12 @@ void	handle(int sig)
 		g_check = 1;
 	else if (sig == SIGUSR2)
 	{
-		ft_putstr_fd("Message received.\n", 1);
+		ft_putstr_fd(MSG_DELIVRD, 1);
 		exit(0);
 	}
 }
 
-void	chopper(int pid, char c)
+void	send_byte(int pid, char c)
 {
 	unsigned char	mask;
 
@@ -45,20 +45,58 @@ void	chopper(int pid, char c)
 	}
 }
 
-int	main(int argc, char **argv)
+int send_str(int pid, char *str)
 {
-	int					i;
+	int	i;
 
-	i = -1;
-	signal(SIGUSR1, &handle);
-	signal(SIGUSR2, &handle);
-	if (argc != 3 || kill(ft_atoi(argv[1]), 0))
-		return (1);
-	while (argv[2][++i])
-		chopper(ft_atoi(argv[1]), argv[2][i]);
+	if(ft_strlen(str) != 0)
+	{
+	while (str)
+		send_byte(pid, *str++);
 	i = -1;
 	while (++i != 8)
-		chopper(ft_atoi(argv[1]), 0);
+		send_byte(pid, 0);
+	return (1);
+	}
+	ft_putstr_fd(STR_EMPTY, 2);
+	return (0);
+}
+
+int check_argc(int argc)
+{
+	if (argc == 3)
+		return (1);
+	ft_putstr_fd(NBA_INVALID, 2);
+	ft_putnbr_fd(3, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd(ARG_INVALID, 2);	
+	return (0);
+}
+
+int check_pid(int pid)
+{
+	if ((pid <= 0) || (kill(pid, 0)))
+	{
+		ft_putstr_fd(PID_INVALID, 2);
+		ft_putstr_fd(ARG_INVALID, 2);
+		return (0);
+	}
+	return (1);
+}
+
+int	main(int argc, char **argv)
+{
+	int pid;
+
+	signal(SIGUSR1, &handle);
+	signal(SIGUSR2, &handle);
+	if(!check_argc(argc))
+		return (1);
+	pid = ft_atoi(argv[1]);
+	if(!check_pid(pid))
+		return (1);
+	if(!send_str(pid, &argv[2][0]))
+		return (1);
 	while (1)
 		continue ;
 }
