@@ -20,9 +20,16 @@ void	handle(int sig)
 		g_check = 1;
 	else if (sig == SIGUSR2)
 	{
+		ft_putstr_fd("\n\n", 1);
 		ft_putstr_fd(MSG_DELIVRD, 1);
 		exit(0);
 	}
+}
+
+void	send_signal(int pid, int signum)
+{
+	if (kill(pid, signum) == -1)
+		exit(EXIT_FAILURE);
 }
 
 void	send_byte(int pid, char c)
@@ -36,11 +43,12 @@ void	send_byte(int pid, char c)
 		{
 			g_check = 0;
 			if (c & mask)
-				kill(pid, SIGUSR1);
+				send_signal(pid, SIGUSR1);
 			else
-				kill(pid, SIGUSR2);
+				send_signal(pid, SIGUSR2);
 			mask >>= 1;
-			usleep(2);
+			while (!g_check)
+				;
 		}
 	}
 }

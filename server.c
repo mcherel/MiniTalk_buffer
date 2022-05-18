@@ -32,28 +32,19 @@ char	*ft_strjoinb(char *s1)
 	return (ret);
 }
 
+void	send_signal(int pid, int signum)
+{
+	if (kill(pid, signum) == -1)
+		exit(EXIT_FAILURE);
+}
+
 void	clear(char *str, int *i, int pid, int *j)
 {
 	ft_putstr_fd(str,1);
-	kill(pid, SIGUSR2);
+	send_signal(pid, SIGUSR2);
 	*i = 0;
 	*j = 0;
 	free(str);
-}
-
-int	atend(char *buff, int *i, int pid, int *j)
-{
-	if (!buff[*i])
-	{
-		clear(&buff[0], i, pid, j);
-		return (0);
-	}
-	if (*i != 0 && *i % 255 == 0)
-	{
-		buff = ft_strjoinb(buff);
-	}
-	*i += 1;
-	return (0);
 }
 
 char	*setup(int *j)
@@ -67,7 +58,7 @@ char	*setup(int *j)
 	return (buff);
 }
 
-void	handle(int sig, siginfo_t *pid, void *del)
+void	handle_signal(int sig, siginfo_t *pid, void *del)
 {
 	static char	*buff;
 	static int	i = 0;
@@ -92,7 +83,7 @@ void	handle(int sig, siginfo_t *pid, void *del)
 			buff = ft_strjoinb(buff);
 		i++;
 	}
-	kill(pid->si_pid, SIGUSR1);
+	send_signal(pid->si_pid, SIGUSR1);
 }
 
 
@@ -105,10 +96,10 @@ int main(void)
 	ft_putnbr_fd((int)getpid(), 1);
 	ft_putstr_fd("\n", 1);
 	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = handle;
+	sa.sa_sigaction = handle_signal;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, 0);
 	sigaction(SIGUSR2, &sa, 0);
 	while (1)
-		continue;
+		pause();
 }
