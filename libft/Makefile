@@ -63,7 +63,7 @@ OBJS_B = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_B)))
 
 
 %.o: %.c $(HEADER)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME): $(OBJS) $(HEADER) 
 	$(AR) $@ $(OBJS)

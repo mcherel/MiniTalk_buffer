@@ -6,63 +6,52 @@
 #    By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 18:22:08 by mcherel-          #+#    #+#              #
-#    Updated: 2022/06/10 16:13:14 by mcherel-         ###   ########.fr        #
+#    Updated: 2022/05/04 15:19:38 by mcherel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minitalk
 
-SRC_DIR = srcs
-
-OBJ_DIR = .objs
-
-LIBFT_DIR = libft
-
-LIBFT = $(LIBFT_DIR)/libft.a
-
-CC = gcc
+CC = clang
 
 CFLAGS = -Wall -Wextra -Werror
 
-LFLAGS = -L ./$(LIBFT_DIR) -lft
+RM = rm -f
 
-RM = /bin/rm -f
+SRCS_CLIENT = client.c
 
-SRCS_CLIENT = $(SRC_DIR)/client.c \
+SRCS_SERVER = server.c
 
-SRCS_SERVER = $(SRC_DIR)/server.c \
+OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
 
-OBJS_CLIENT = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/$(NAME_CLIENT).o, $(SRCS_CLIENT))
-
-OBJS_SERVER = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/$(NAME_SERVER).o, $(SRCS_SERVER))
-
-HEAD = -I./include -I./$(LIBFT_DIR)
+OBJS_SERVER = $(SRCS_SERVER:.c=.o)
 
 NAME_CLIENT = client
 
 NAME_SERVER = server
 
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
-				mkdir -p $(OBJ_DIR)
-				$(CC) $(CFLAGS) $(HEAD) -c $< -o $@
+LIBFT = ./libft/libft.a
+
+%.o:			%.c
+				$(CC) $(CFLAGS) -c $< -o $@ -Ilibft
 
 $(NAME_CLIENT):	$(OBJS_CLIENT) $(LIBFT)
-				$(CC) $(OBJS_CLIENT) $(HEAD) $(CFLAGS) $(LFLAGS) -o $(NAME_CLIENT)
+				$(CC) $< -o $@ -Llibft -lft 
 
 $(NAME_SERVER):	$(OBJS_SERVER) $(LIBFT)
-				$(CC) $(OBJS_SERVER) $(HEAD) $(CFLAGS) $(LFLAGS) -o $(NAME_SERVER)
+				$(CC) $< -o $@ -Llibft -lft 
 
 $(LIBFT):
-				@make -C $(LIBFT_DIR)
+				make -C libft all
 
 all:			$(NAME_CLIENT) $(NAME_SERVER)
 
 clean:
-				@make clean -C $(LIBFT_DIR)
+				make clean -C ./libft
 				$(RM) $(OBJS_CLIENT) $(OBJS_SERVER)
 
 fclean:			clean
-				make fclean -C $(LIBFT_DIR)
+				make fclean -C ./libft
 				$(RM) $(NAME_CLIENT) $(NAME_SERVER)
 
 re:				fclean all
