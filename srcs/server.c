@@ -6,7 +6,7 @@
 /*   By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 18:14:25 by mcherel-          #+#    #+#             */
-/*   Updated: 2022/06/13 16:10:21 by mcherel-         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:31:12 by mcherel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ char	*ft_strjoinb(char *s1)
 	return (ret);
 }
 
-void	clear(char *str, int *i, int pid, int *j)
+void	print_and_free(char *str, int *i, int pid, int *j)
 {
 	ft_putstr_fd(str, 1);
+	ft_putchar_fd('\n', 1);
 	send_signal(pid, SIGUSR2);
 	*i = 0;
 	*j = 0;
@@ -70,7 +71,7 @@ void	handle_signal(int sig, siginfo_t *pid, void *del)
 		count = 0;
 		if (!buff[i])
 		{
-			clear(&buff[0], &i, pid->si_pid, &j);
+			print_and_free(&buff[0], &i, pid->si_pid, &j);
 			return ;
 		}
 		if (i != 0 && i % 255 == 0)

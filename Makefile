@@ -6,7 +6,7 @@
 #    By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 18:22:08 by mcherel-          #+#    #+#              #
-#    Updated: 2022/06/13 16:25:56 by mcherel-         ###   ########.fr        #
+#    Updated: 2022/06/13 16:55:37 by mcherel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 LFLAGS = -L ./$(LIBFT_DIR) -lft
 
