@@ -6,7 +6,7 @@
 /*   By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 18:14:25 by mcherel-          #+#    #+#             */
-/*   Updated: 2022/05/04 18:59:50 by mcherel-         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:10:21 by mcherel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,9 @@ char	*ft_strjoinb(char *s1)
 	return (ret);
 }
 
-void	send_signal(int pid, int signum)
-{
-	if (kill(pid, signum) == -1)
-		exit(EXIT_FAILURE);
-}
-
 void	clear(char *str, int *i, int pid, int *j)
 {
-	ft_putstr_fd(str,1);
+	ft_putstr_fd(str, 1);
 	send_signal(pid, SIGUSR2);
 	*i = 0;
 	*j = 0;
@@ -86,9 +80,7 @@ void	handle_signal(int sig, siginfo_t *pid, void *del)
 	send_signal(pid->si_pid, SIGUSR1);
 }
 
-
-
-int main(void)
+int	main(void)
 {
 	struct sigaction	sa;
 

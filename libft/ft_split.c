@@ -6,7 +6,7 @@
 /*   By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 15:18:21 by mcherel-          #+#    #+#             */
-/*   Updated: 2022/05/02 17:09:36 by mcherel-         ###   ########.fr       */
+/*   Updated: 2022/06/13 10:41:25 by mcherel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static unsigned int	ft_nb_unit(char const *s, char c);
 static char			**ft_strndup(char **tab, char const *s, char c, int n);
-static char				**ft_clear(char **tab);
+static char			**ft_clear(char **tab);
 
 char	**ft_split(char const *s, char c)
 {

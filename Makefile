@@ -6,7 +6,7 @@
 #    By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 18:22:08 by mcherel-          #+#    #+#              #
-#    Updated: 2022/06/10 16:13:14 by mcherel-         ###   ########.fr        #
+#    Updated: 2022/06/13 16:25:56 by mcherel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,19 +28,21 @@ LFLAGS = -L ./$(LIBFT_DIR) -lft
 
 RM = /bin/rm -f
 
-SRCS_CLIENT = $(SRC_DIR)/client.c \
+SRCS_CLIENT = $(SRC_DIR)/client.c $(SRC_DIR)/send_signal.c
 
-SRCS_SERVER = $(SRC_DIR)/server.c \
+SRCS_SERVER = $(SRC_DIR)/server.c $(SRC_DIR)/send_signal.c
 
-OBJS_CLIENT = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/$(NAME_CLIENT).o, $(SRCS_CLIENT))
+OBJS_CLIENT = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.o, $(SRCS_CLIENT))
 
-OBJS_SERVER = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/$(NAME_SERVER).o, $(SRCS_SERVER))
+OBJS_SERVER = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)/%.o, $(SRCS_SERVER))
 
 HEAD = -I./include -I./$(LIBFT_DIR)
 
 NAME_CLIENT = client
 
 NAME_SERVER = server
+
+all:			$(NAME_CLIENT) $(NAME_SERVER)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 				mkdir -p $(OBJ_DIR)
@@ -54,8 +56,6 @@ $(NAME_SERVER):	$(OBJS_SERVER) $(LIBFT)
 
 $(LIBFT):
 				@make -C $(LIBFT_DIR)
-
-all:			$(NAME_CLIENT) $(NAME_SERVER)
 
 clean:
 				@make clean -C $(LIBFT_DIR)
