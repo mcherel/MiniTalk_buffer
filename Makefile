@@ -6,7 +6,7 @@
 #    By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 18:22:08 by mcherel-          #+#    #+#              #
-#    Updated: 2022/06/13 16:55:37 by mcherel-         ###   ########.fr        #
+#    Updated: 2022/06/14 15:48:45 by mcherel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 LFLAGS = -L ./$(LIBFT_DIR) -lft
 
-RM = /bin/rm -f
+RM = /bin/rm -rf
 
 SRCS_CLIENT = $(SRC_DIR)/client.c $(SRC_DIR)/send_signal.c
 
@@ -59,7 +59,7 @@ $(LIBFT):
 
 clean:
 				@make clean -C $(LIBFT_DIR)
-				$(RM) $(OBJS_CLIENT) $(OBJS_SERVER)
+				@$(RM) $(OBJS_CLIENT) $(OBJS_SERVER) $(OBJ_DIR)
 
 fclean:			clean
 				make fclean -C $(LIBFT_DIR)

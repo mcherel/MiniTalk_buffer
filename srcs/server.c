@@ -6,30 +6,30 @@
 /*   By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 18:14:25 by mcherel-          #+#    #+#             */
-/*   Updated: 2022/06/13 17:31:12 by mcherel-         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:30:25 by mcherel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-char	*ft_strjoinb(char *s1)
+char	*ft_strjoinb(char *str)
 {
-	char	*ret;
+	char	*tmp;
 	int		i;
 
-	if (!s1)
+	if (!str)
 		return (NULL);
 	i = -1;
-	ret = ft_calloc(ft_strlen(s1) + 257, 1);
-	if (!ret)
+	tmp = ft_calloc(ft_strlen(str) + 257, 1);
+	if (!tmp)
 	{
-		free(s1);
+		free(str);
 		exit(0);
 	}
-	while (s1[++i])
-		ret[i] = (char)s1[i];
-	free(s1);
-	return (ret);
+	while (str[++i])
+		tmp[i] = (char)str[i];
+	free(str);
+	return (tmp);
 }
 
 void	print_and_free(char *str, int *i, int pid, int *j)
@@ -81,6 +81,25 @@ void	handle_signal(int sig, siginfo_t *pid, void *del)
 	send_signal(pid->si_pid, SIGUSR1);
 }
 
+/* sa_flags spécifie un ensemble d'attributs  */
+/* 	qui modifient le comportement du signal */
+/* SA_SIGINFO (Depuis Linux 2.2)*/
+/*- Le gestionnaire de signal recevra trois arguments, 
+et non plus un seul.*/
+/*- Dans ce cas, il faut utiliser le membre sa_sigaction 
+et non pas sa_handler.*/
+/* - Cette fonction prend le numéro du signal comme premier argument, */
+/*    un pointeur sur un siginfo_t comme second argument */
+/*    et un pointeur sur un ucontext_t (transtypé en void *) 
+comme troisième argument. */
+/* struct sigaction {
+    void     (*sa_handler) (int);
+    void     (*sa_sigaction) (int, siginfo_t *, void *);
+    sigset_t   sa_mask;
+    int        sa_flags;
+    void     (*sa_restorer) (void);
+};
+   */
 int	main(void)
 {
 	struct sigaction	sa;

@@ -6,7 +6,7 @@
 /*   By: mcherel- <mcherel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 18:14:18 by mcherel-          #+#    #+#             */
-/*   Updated: 2022/06/13 16:28:56 by mcherel-         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:15:05 by mcherel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle(int sig)
 		g_check = 1;
 	else if (sig == SIGUSR2)
 	{
-		ft_putstr_fd("\n\n", 1);
+		ft_putstr_fd("\n", 1);
 		ft_putstr_fd(MSG_DELIVRD, 1);
 		exit(0);
 	}
@@ -63,17 +63,6 @@ int	send_str(int pid, char *str)
 	ft_putstr_fd(STR_EMPTY, 2);
 	return (0);
 }
-/* 
-int	check_argc(int argc)
-{
-	if (argc == 3)
-		return (1);
-	ft_putstr_fd(NBA_INVALID, 2);
-	ft_putnbr_fd(3, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd(ARG_INVALID, 2);
-	return (0);
-} */
 
 int	check_pid(int pid)
 {
