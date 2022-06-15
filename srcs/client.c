@@ -92,7 +92,7 @@ int	main(int argc, char **argv)
 	pid = ft_atoi(argv[1]);
 	if (!check_pid(pid))
 		return (1);
-	if (!send_str(pid, &argv[2][0]))
+	if (!send_str(pid, &argv[2]))
 		return (1);
 	while (1)
 		continue ;
